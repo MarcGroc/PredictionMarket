@@ -20,7 +20,9 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
-    def not_older_than_five_days(self):
-        return (datetime.date.today() - self.date_created).days < 5
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=5) <= self.date_created <= now
+
 
 
