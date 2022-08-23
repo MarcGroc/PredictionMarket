@@ -1,0 +1,26 @@
+{% extends 'website/base.html' %}
+    {% block content %}
+        <div class="container">
+            <div class="card-deck">
+                <div class="row">
+                    {% for event in all_events %}
+                        <div class="col-lg-3 py-3">
+                            <div class="card card-custom bg-white border-white border-0">
+                              <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
+                              <div class="card-custom-avatar">
+                                <img class="img-fluid" src="https://picsum.photos/280/200?random={{ event.id }}" alt="Avatar" />
+                              </div>
+                              <div class="card-body" style="overflow-y: auto">
+                                <h4 class="card-title">{{ event.category.capitalize}} Events</h4>
+                                <p class="card-text"><strong>{{ event.title }}</strong><p>
+                              </div>
+                              <div class="card-footer" style="background: inherit; border-color: inherit;">
+                                <a href="{% url 'event' event.id %}" class="btn btn-primary">Predict now!</a>
+                              </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
