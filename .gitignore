@@ -137,10 +137,13 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
 .idea/
 .idea
+../.idea/
+../.idea
 scratch.py
 scratch.js
 scratch.http
-website/scratch.html
-/website/migrations
+*/scratch.html
+/*/migrations
