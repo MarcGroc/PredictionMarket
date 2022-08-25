@@ -3,7 +3,7 @@ name: Prediction Market
 on:
   push:
     branches:
-      - "**"
+      - users
 
 jobs:
   build:
