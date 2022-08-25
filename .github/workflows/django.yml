@@ -1,6 +1,9 @@
 name: Prediction Market
 
-on: [push]
+on:
+  push:
+    branches:
+      - "**"
 
 jobs:
   build:
