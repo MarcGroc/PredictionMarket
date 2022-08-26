@@ -1,9 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, User, AuthenticationForm, PasswordResetForm
 
+from users.models import UserProfile
+
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField()
 
     class Meta:
         model = User
@@ -22,3 +24,11 @@ class UserPasswordResetForm(PasswordResetForm):
     class Meta:
         model = User
         fields = ['username']
+
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', ]

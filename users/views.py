@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView
 
-from .forms import UserRegisterForm, UserLoginForm, UserPasswordResetForm
-from .models import UserProfile
+from .forms import UserRegisterForm, UserLoginForm, UserPasswordResetForm, UserUpdateForm
 
 
 class UserRegisterView(CreateView, SuccessMessageMixin):
@@ -38,5 +38,6 @@ class UserPasswordResetView(PasswordResetView):
 
 @method_decorator(login_required, name='dispatch')
 class UserProfileView(DetailView):
-    model = UserProfile
+    model = User
     template_name = 'users/profile.html'
+    form = UserUpdateForm()
