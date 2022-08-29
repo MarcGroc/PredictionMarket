@@ -40,4 +40,6 @@ class UserPasswordResetView(PasswordResetView):
 class UserProfileView(DetailView):
     model = User
     template_name = 'users/profile.html'
-    form = UserUpdateForm()
+
+    def get_object(self, *args, **kwargs):
+        return self.request.user
