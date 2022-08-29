@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 from django.views.generic import ListView, DetailView
 
 from website.models import Event
@@ -45,7 +43,6 @@ class OtherView(ListView):
     template_name = 'website/other.html'
     paginate_by = 100
     context_object_name = 'all_events'
-
 
 
 class EventView(DetailView):
