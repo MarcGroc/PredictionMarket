@@ -2,3 +2,4 @@ Django==4.1
 pytest==7.1.2
 python-dotenv==0.20.0
 django-social-share==2.3.0
+django-crispy-forms==1.14.0
