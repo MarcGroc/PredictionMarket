@@ -1,31 +1,89 @@
 {% extends 'website/base.html' %}
 {% load static %}
-{% static "website/images/fblike.jpg" as fb_icon %}
 {% load social_share %}
 {% block content %}
-        <div class="container">
-            <div class="card-deck">
-                <div class="row">
-                    <div class="col-lg-3 py-3">
-                        <div class="card card-custom bg-white border-white border-0">
-                          <div class="card-custom-img" style="background-image: url(https://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
-                          <div class="card-custom-avatar">
-                            <img class="img-fluid" src="https://robohash.org/{{ event.id }}" alt="Avatar" />
-                          </div>
-                          <div class="card-body" style="overflow-y: auto">
-                            <p class="card-text"><strong>{{ event.title }}</strong><p>
-                              <p class="card-text">Volume {{ event.volume }}$</p>
-                              <p class="card-text">Expiry {{ event.expiration_date }}</p>
-                          </div>
-                          <div class="card-footer" style="background: inherit; border-color: inherit;">
+    <script type="text/javascript">
+        const expiryDate = "{{ event.expiration_date }}";
+        const startDate = "{{ event.date_created }}";
+        const volume = "{{ event.volume }}";
+    </script>
+    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    <div class="container">
+        <div class="card-deck">
+            <div class="row">
+                <div class="col-lg-4 py-3">
+                    <div class="card card-custom bg-white border-white border-0">
+                        <div class="card-custom-img"
+                             style="background-image: url(https://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
+                        <div class="card-custom-avatar">
+                            <img class="img-fluid" src="https://robohash.org/{{ event.id }}" alt="Avatar"/>
+                        </div>
+                        <div class="card-body" style="overflow-y: auto">
+                            <p class="card-text"><strong>{{ event.title }}</strong>
+                            <p>
+
+                        </div>
+                        <div class="row">
+                            <br>
+                            <div class="col-md-6">
+                                <button class="btn btn-primary btn-lg btn-block" id="yes" onclick=startTimer()
+                                        style="width: 100%;">YES
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="btn btn-danger btn-lg btn-block" id="no" style="width: 100%;">NO
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-footer" style="background: inherit; border-color: inherit;">
                             <p>{% post_to_facebook object_or_url fb_icon %}</p>
                             <p>{% post_to_telegram "Predict: " object_or_url %}</p>
                             <p class="button">{% post_to_twitter "Predict: {{object.title}}" object_or_url "Post to Twitter" %}</p>
-                            <a href="{% url 'event' event.id %}" class="btn btn-primary">Predict now!</a>
-                          </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6 py-3">
+                    <h1><strong>Event Info</strong></h1>
+                    <br>
+                    <h5><strong>Event will end at {{ event.expiration_date }}</strong></h5>
+                    <h5 id="countdown"></h5>
+                    <script>
+                        const deadline = new Date(expiryDate).getTime();
+                        const x = setInterval(function () {
+                            const now = new Date().getTime();
+                            const t = deadline - now;
+                            const days = Math.floor(t / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            const minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((t % (1000 * 60)) / 1000);
+                            document.getElementById("countdown").innerHTML = days + "d "
+                                + hours + "h " + minutes + "m " + seconds + "s !";
+                        }, 1000);
+                    </script>
+                    <br>
+                    <a class="btn btn-primary btn-lg" type="button"
+                       href="https://www.google.com/search?q={{ event.title }}" target="_blank">Search for
+                        more about event</a>
+                    <br>
+                    <br>
+                    <br>
+                    <h5><strong>Market Volume {{ event.volume }}$</strong></h5>
+                    <br>
+                    <div id="plot" style="width:600px;height:400px;"></div>
+                    <br>
+                    <script>
+                        TESTER = document.getElementById('plot');
+                        Plotly.newPlot(TESTER, [{
+                            x: [startDate, expiryDate],
+                            y: [0, 1],
+                            type: 'date',
+                        }], {
+                            margin: {t: 1},
+
+                        });
+                    </script>
+                </div>
             </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
