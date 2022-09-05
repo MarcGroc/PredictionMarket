@@ -31,9 +31,9 @@ class PoliticsView(ListView):
     context_object_name = 'all_events'
 
 
-class NewView(ListView):
+class CryptoView(ListView):
     model = Event
-    template_name = 'website/new.html'
+    template_name = 'website/crypto.html'
     paginate_by = 100
     context_object_name = 'all_events'
 

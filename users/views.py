@@ -6,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView
 
-from .forms import UserRegisterForm, UserLoginForm, UserPasswordResetForm, UserUpdateForm
+from .forms import UserRegisterForm, UserLoginForm, UserPasswordResetForm
 
 
 class UserRegisterView(CreateView, SuccessMessageMixin):

@@ -8,6 +8,6 @@ from users.models import UserProfile
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     user = instance
-    if created:
+    if created is True:
         profile = UserProfile(user=user)
         profile.save()

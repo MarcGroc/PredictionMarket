@@ -1,49 +1,47 @@
-{% extends 'website/base.html'%}
+{% extends 'website/base.html' %}
 {% load crispy_forms_filters %}
 {% load static %}
-
-{% block title %} Profile {% endblock %}
-
-{% block stylesheets %}{% endblock stylesheets %}
-
 {% block content %}
     <main class="content">
-            <div class="row">
-                <div class="col-12 col-xl-8">
-                    <div class="card card-body bg-white border-light shadow-sm mb-4">
-                        <h1>Hi, {{ user.username.capitalize }}</h1>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <h2 class="h5 mb-4">Assets</h2>
-                            </div>
+        <div class="row">
+            <div class="col-12 col-xl-8">
+                <div class="card card-body bg-white border-light shadow-sm mb-4">
+                    <h1>Hi, {{ user.username.capitalize }}</h1>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h2 class="h5 mb-4">Assets</h2>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <h2 class="h5 mb-4">bet 1</h2>
-                                <h2 class="h5 mb-4">bet 2</h2>
-                                <h2 class="h5 mb-4">bet 3</h2>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="h5 mb-4">
+                                {% for even in user.userprofile.events.all %}
+                                    <strong>Event : {{ even.title }}
+                                {% endfor %}
+                                Prediction : {{ user.userprofile.choice.upper }}</strong>
+                            </h2>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-xl-4">
-                    <div class="row">
-                        <div class="col-12 mb-4">
-                            <div class="card border-light text-center p-0">
-                                <div class="card-body pb-5">
-                                    <img src="https://robohash.org/{{ user.username }}"
-                                         class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Robo">
-                                    <h5 class="font-weight-normal"><strong>{{ user.username.capitalize }}</strong></h5>
-                                    <br>
-                                    <h5 class="font-weight-normal">Value <strong>{{ user.userprofile.assets }} $</strong></h5>
-                                </div>
+            </div>
+            <div class="col-12 col-xl-4">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card border-light text-center p-0">
+                            <div class="card-body pb-5">
+                                <img src="https://robohash.org/{{ user.username }}"
+                                     class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Robo">
+                                <h5 class="font-weight-normal"><strong>{{ user.username.capitalize }}</strong></h5>
+                                <br>
+                                <h5 class="font-weight-normal">Value <strong>{{ user.userprofile.assets }} $</strong>
+                                </h5>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 {% endblock content %}
 
-{% block javascripts %}{% endblock javascripts %}
